@@ -1,10 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const expressHBs = require("express-handlebars");
+//const expressHBs = require("express-handlebars");
 
 const adminData = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+const errorController = require("./controllers/error")
 
 const app = express();
 
@@ -30,8 +31,6 @@ app.use("/", (req, res, next) => {
 
 app.use("/admin", adminData.routes);
 app.use(shopRoutes);
-app.use("/", (req, res, next) => {
-  res.status(404).render("404", { pageTitle: "Not Found", path: "error" });
-});
+app.use("/", errorController.get404Page);
 
 app.listen(3000);
